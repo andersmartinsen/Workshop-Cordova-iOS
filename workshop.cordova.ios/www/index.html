@@ -1,64 +1,139 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
-  <title></title>
-  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-	<meta charset="utf-8">
-
-
-	<!-- iPad/iPhone specific css below, add after your main css >
-	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-	-->
-	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
-	<script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>
-    <script type="text/javascript">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
-	
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	/*
-	function handleOpenURL(url)
-	{
-		// TODO: do something with the url passed in.
-	}
-	*/
-	
-	function onBodyLoad()
-	{		
-		document.addEventListener("deviceready", onDeviceReady, false);
-	}
-	
-	/* When this function is called, Cordova has been initialized and is ready to roll */
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	function onDeviceReady()
-	{
-		// do your thing!
-		navigator.notification.alert("Cordova is working")
-	}
-    
+    <title>Twitter klient</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="stylesheet" href="javascripts/vendor/jquery.mobile-1.0.1.css" />
+    <script src="javascripts/vendor/jquery-1.7.1.js"></script>
+    <script src="cordova-1.5.0.js"></script>
+    <script>
+      $(document)
+        .on("mobileinit", function(){
+          // Make your jQuery Mobile framework configuration changes here!
+          $.mobile.allowCrossDomainPages = true;
+          $.support.cors = true;
+        });
     </script>
+    
+    <script src="javascripts/vendor/jquery.mobile-1.0.1.js"></script>
   </head>
-  <body onload="onBodyLoad()">
-	<h1>Hey, it's Cordova!</h1>
-	<p>Don't know how to get started? Check out our <em><a target="_blank" href="http://docs.phonegap.com/en/1.4.1/guide_getting-started_ios_index.md.html#Getting%20Started%20with%20iOS">Getting Started Guide</a></em>
-	<br />
-	<ol>
-		<li>Check your console log for any white-list rejection errors.</li>
-		<li>Add your allowed <strong>hosts</strong> in Cordova.plist/ExternalHosts (wildcards OK, don't enter the URL scheme)</li>
-	</ol>
+  <body>
+    <div data-role="page" id="forside">
+      <div data-role="header">
+        <h1>Twitter klient</h1>
+      </div>
+
+      <div data-role="content">
+        <ul data-role="listview" data-theme="b">
+          <li>
+            <a href="#sokeord">Søkeord</a>
+          </li>
+          <li>
+            <a href="#geolokasjon">Geolokasjon</a>
+          </li>
+		  <li>
+			<a href="#kontaktliste">Kontaktliste</a>
+		  </li>
+          <li>
+            <a href="#audio">Lyd</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-role="page" id="sokeord" data-add-back-btn="true">
+      <div data-role="header">
+
+        <h1>Tweets fra søkeord</h1>
+      </div>
+
+      <div data-role="content">
+        <form>
+          <label for="search" class="ui-hidden-accessible">Søkeord:</label>
+          <input type="text" name="search" id="search" value="" placeholder="søkeord"/>
+          <button type="submit" data-theme="b" id="searchButton" name="submitButton" value="submit-value">Søk</button>
+        </form>
+      </div>
+    </div>
+
+    <div data-role="page" id="geolokasjon" data-add-back-btn="true">
+      <div data-role="header">
+        <h1>Tweets fra geolokasjon</h1>
+      </div>
+
+      <div data-role="content">
+        <form>
+          <button type="submit" data-theme="b" id="geoSearchButton" name="submitButton" value="submit-value">Søk</button>
+        </form>
+      </div>
+      <div id = "geolocation"></div>
+    </div>
+	
+	<div data-role="page" id="kontaktliste" data-add-back-btn="true">
+    <div data-role="header">
+      <h1>Søke opp twitterbruk og lagre til kontaktliste</h1>
+    </div>
+
+	  <div data-role="content">
+      <form>
+        <label for="search" class="ui-hidden-accessible">Brukernavn:</label>
+        <input type="text" name="search" id="searchUsernameField" value="" placeholder="brukernavn"/>
+        <button type="submit" data-theme="b" id="twitterUserSearchButton" name="submitButton" value="submit-value">Søk</button>
+      </form>
+    </div>
+  </div>
+
+    <div data-role="page" id="results">
+      <div data-role="header">
+        <a href="#forside" data-role="button" data-icon="home">Forsiden</a>
+        <h1>Resultater</h1>
+      </div>
+
+      <div data-role="content">
+        <ul id="tweets" data-role="listview" data-inset="true"></ul>
+      </div>
+    </div>
+
+	  <div data-role="page" id="usernameResultPage">
+      <div data-role="header">
+        <a href="#forside" data-role="button" data-icon="home">Forsiden</a>
+        <h1>Resultat</h1>
+      </div>
+
+      <div data-role="content">
+  		  <div id="user"></div>
+      </div>
+    </div>
+
+    <div data-role="page" id="audio">
+      <div data-role="header">
+        <a href="#forside" data-role="button" data-icon="home">Forsiden</a>
+        <h1>Lyd</h1>
+      </div>
+      <div data-role="content">
+        <a id="record" data-role="button">Start opptak</a>
+      <div>
+    </div>
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/app.js"></script>
+    <script>
+      $(function(){
+        var app = new App({
+          searchField: "#search",
+          tweets: "#tweets",
+          searchButton: "#searchButton",
+          geoSearchButton: "#geoSearchButton",
+		      twitterUserSearchButton: "#twitterUserSearchButton",
+		      searchUsernameField: "#searchUsernameField",
+          resultsPage: "#results",
+		      usernameResultPage: "#usernameResultPage",
+		      user: "#user",
+          recordButton: "#record",
+          playButton: "#play"
+        });
+      });
+    </script>
   </body>
 </html>
