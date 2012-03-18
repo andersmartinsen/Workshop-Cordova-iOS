@@ -5,11 +5,12 @@
     this.searchButton = $(params.searchButton);
     this.twitterUserSearchButton = $(params.twitterUserSearchButton);
     this.searchUsernameField = $(params.searchUsernameField);
-	  this.usernameResultPage = $(params.usernameResultPage);
-	  this.user = $(params.user);
+    this.usernameResultPage = $(params.usernameResultPage);
+    this.user = $(params.user);
     this.geoSearchButton = $(params.geoSearchButton);
     this.resultsPage = $(params.resultsPage);
     this.recordButton = $(params.recordButton);
+	this.geoNetworkSearchButton = $(params.geoNetworkSearchButton); 
     this.setupBindings();
   }
   $.extend(App.prototype, {
@@ -28,13 +29,17 @@
         self.searchByLocation();
       });
 
+	  self.geoNetworkSearchButton.on("click", function(e) {
+        e.preventDefault();
+        self.searchByLocationWithNetworkCheck();
+      });
+
 	  self.twitterUserSearchButton.on("click", function(e) {
 	        e.preventDefault();
 	        self.searchByTwitterName(self.searchUsernameField.val());
-     });
+      });
 		
-
-      self.recordButton.on("click", function(e){
+	  self.recordButton.on("click", function(e){
         navigator.device.capture.captureAudio(function(mediaFiles){
           mediaFiles.forEach(function(mediaFile){
             var path = mediaFile.fullPath;
@@ -92,8 +97,9 @@
     }
     },
     searchByLocation: function(){
+	  console.log("Searching for geolocation");
       var self = this;
-      navigator.geolocation.getCurrentPosition(function(location){
+	  navigator.geolocation.getCurrentPosition(function(location){
         var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
         var latitude = location.coords.latitude;
         var longitude = location.coords.longitude;
@@ -108,8 +114,60 @@
           }
         });
       } , function(error){console.log("Something went wrong with location")});
-    },
-	searchByTwitterName: function(username) {
+	},
+	searchByLocationWithNetworkCheck: function() {
+		console.log("Searching for geolocation with network check")
+		var self = this;
+		checkConnection();
+	    
+		function checkConnection() {
+		  	var networkState = navigator.network.connection.type;
+
+			var states = {};
+			states[Connection.UNKNOWN]  = 'Unknown connection';
+			states[Connection.NONE]     = 'No network connection';
+			
+			if (states[Connection.UNKNOWN] || states[Connection.NONE]) {
+				console.log("Ikke noe nettverk. Henter tweets fra Oslo og i nærheten av Bekk sine lokaler");
+				useOsloAsLocation();
+			} else {
+				findGeoLocationWithPhoneGap();
+			}
+		}
+		function findGeoLocationWithPhoneGap() {
+		  navigator.geolocation.getCurrentPosition(function(location){
+	        var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
+	        var latitude = location.coords.latitude;
+	        var longitude = location.coords.longitude;
+	        twitter_api_url += latitude + ',' + longitude + ',10km&rpp=5&show_user=true';
+
+	        $.getJSON(twitter_api_url, function(data) {
+	          if (data == undefined || data.results == undefined || data.results.length == 0){
+	            navigator.notification.alert("No results for your location");
+	          } else {
+	            $.mobile.changePage(self.resultsPage);
+	            self.renderTweets(data.results);
+	          }
+	        });
+	      } , function(error){console.log("Something went wrong when fetching tweets by geolocation")});
+	 	}
+		function useOsloAsLocation() {
+	        var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
+	        var latitude = 59.904564;
+	        var longitude = 10.741024;
+	        twitter_api_url += latitude + ',' + longitude + ',10km&rpp=5&show_user=true';
+
+	        $.getJSON(twitter_api_url, function(data) {
+	          if (data == undefined || data.results == undefined || data.results.length == 0){
+	            navigator.notification.alert("No results for your location");
+	          } else {
+	            $.mobile.changePage(self.resultsPage);
+	            self.renderTweets(data.results);
+	          }
+	        });
+	 		}
+		},
+		searchByTwitterName: function(username) {
 		console.log("Searching for " + username);
 	      var searchUrl = 'http://api.twitter.com/1/users/show.json?callback=?&screen_name=' + username;
 	      var self = this;
