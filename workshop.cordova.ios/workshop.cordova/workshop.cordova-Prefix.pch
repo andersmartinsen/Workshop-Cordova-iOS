@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'workshop.cordova' target in the 'workshop.cordova' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif
