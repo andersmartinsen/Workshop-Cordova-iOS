@@ -122,49 +122,42 @@
 	    
 		function checkConnection() {
 		  	var networkState = navigator.network.connection.type;
-
-			var states = {};
-			states[Connection.UNKNOWN]  = 'Unknown connection';
-			states[Connection.NONE]     = 'No network connection';
-			
-			if (states[Connection.UNKNOWN] || states[Connection.NONE]) {
-				console.log("Ikke noe nettverk. Henter tweets fra Oslo og i nærheten av Bekk sine lokaler");
-				useOsloAsLocation();
+		
+			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+				console.log("No network. Returns an error alert");
+				navigator.notification.alert(
+				            'Could not fetch tweets since you are not connected to a network',
+				            alertDismissed,
+				            'Network problems',            
+				            'Done'
+						);
 			} else {
 				findGeoLocationWithPhoneGap();
 			}
 		}
+		
+		function alertDismissed() {
+		        // do something
+		}
+		
 		function findGeoLocationWithPhoneGap() {
-		  navigator.geolocation.getCurrentPosition(function(location){
-	        var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
-	        var latitude = location.coords.latitude;
-	        var longitude = location.coords.longitude;
-	        twitter_api_url += latitude + ',' + longitude + ',10km&rpp=5&show_user=true';
+			console.log("Henter geolocation with PhoneGap")
+		    navigator.geolocation.getCurrentPosition(function(location)
+			{
+	        	var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
+	        	var latitude = location.coords.latitude;
+	        	var longitude = location.coords.longitude;
+	        	twitter_api_url += latitude + ',' + longitude + ',10km&rpp=5&show_user=true';
 
-	        $.getJSON(twitter_api_url, function(data) {
-	          if (data == undefined || data.results == undefined || data.results.length == 0){
-	            navigator.notification.alert("No results for your location");
-	          } else {
-	            $.mobile.changePage(self.resultsPage);
-	            self.renderTweets(data.results);
-	          }
-	        });
-	      } , function(error){console.log("Something went wrong when fetching tweets by geolocation")});
-	 	}
-		function useOsloAsLocation() {
-	        var twitter_api_url = 'http://search.twitter.com/search.json?geocode=';
-	        var latitude = 59.904564;
-	        var longitude = 10.741024;
-	        twitter_api_url += latitude + ',' + longitude + ',10km&rpp=5&show_user=true';
-
-	        $.getJSON(twitter_api_url, function(data) {
-	          if (data == undefined || data.results == undefined || data.results.length == 0){
-	            navigator.notification.alert("No results for your location");
-	          } else {
-	            $.mobile.changePage(self.resultsPage);
-	            self.renderTweets(data.results);
-	          }
-	        });
+	        	$.getJSON(twitter_api_url, function(data) {
+	          		if (data == undefined || data.results == undefined || data.results.length == 0){
+	            		navigator.notification.alert("No results for your location");
+	          		} else {
+	            		$.mobile.changePage(self.resultsPage);
+	            		self.renderTweets(data.results);
+	          		}
+	        	});
+	      		} , function(error){console.log("Something went wrong when fetching tweets by geolocation")});
 	 		}
 		},
 		searchByTwitterName: function(username) {
