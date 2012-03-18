@@ -56,10 +56,3 @@ Modifiser oppgave 2 (geolokasjon) til å først sjekke om telefon har nettverkst
 
 Du kan bruke Chrome til å teste appen din. På mac/linux kan du starte Chrome i en modus som tillater nettverkskallene vi trenger.
 open -a /Applications/Google\ Chrome.app --args  -allow-file-access-from-files -disable-web-security
-
-Ting å huske på i forhold til iOS:
-
-PhoneGap.plist og legge til disse som ExternalHosts:
-
-*.twimg.com
-*.twitter.com
