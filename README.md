@@ -2,13 +2,18 @@
 
 ## Verktøy og oppgaver
 
-1.  Installer Xcode fra App Store eller fra Apple Developer Portal hvis du har medlemskap. Kurset er testet med versjon 4.2 for Snow Leopard, men burde fungere fint for versjon 4.3 også
+1.  Installer Xcode fra App Store eller fra [Apple Developer Portal](https://developer.apple.com/) hvis du har medlemskap. Kurset er testet med versjon 4.2 av Xcode for Snow Leopard, men burde fungere fint for versjon 4.3 også.
 2.  Start opp Xcode og velg "Connect to a repository"
-    Lim inn git@github.com:andersmartinsen/Workshop-Cordova-iOS.git som location
-	Trykk next
-	Velg for eksempel Cordova som Name og trykk Clone
-	Tilbake i hovedvinduet velg Open Other nede i venstre hjørnet
-	Naviger deg fram mappen hvor du valgte å clone prosjektet og let etter filen som heter "workshop.cordova.xcodeproj" som er prosjektfilen. Velg denne, og du er så klar til å sette i gang med oppgavene.
+
+    2.1 Lim inn git@github.com:andersmartinsen/Workshop-Cordova-iOS.git som location
+    
+    2.2 Trykk next
+    
+    2.3 Velg for eksempel Cordova som Name og trykk Clone
+    
+    2.4 Tilbake i hovedvinduet velg Open Other nede i venstre hjørnet
+    
+    2.5 Naviger deg fram mappen hvor du valgte å clone prosjektet og let etter filen som heter "workshop.cordova.xcodeproj" som er prosjektfilen. Velg denne, prosjektet med kode lastes inn, og du er så klar til å sette i gang med oppgavene.
 3.  Trykk Cmd + R for å kjøre i gang simulatoren for å se hva som finnes allerede i applikasjonen
 
 ## Lenker
