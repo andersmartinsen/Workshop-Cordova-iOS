@@ -18,7 +18,7 @@
 
 ## Lenker
 
-[Phonegap guide](http://phonegap.com/start)
+[Phonegap guide for iOS](http://phonegap.com/start#ios-x4)
 
 ## Utgangspunkt/utdelt kode
 
