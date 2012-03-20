@@ -137,7 +137,7 @@
 		}
 		
 		function alertDismissed() {
-		        // do something
+			console.log("Alert dismissed");
 		}
 		
 		function findGeoLocationWithPhoneGap() {
