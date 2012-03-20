@@ -19,7 +19,11 @@
 
 ## Lenker
 
-[Phonegap guide for iOS](http://phonegap.com/start#ios-x4)
+* [PhoneGap guide for iOS](http://phonegap.com/start#ios-x4)
+* [PhoneGap API](http://docs.phonegap.com/en/1.5.0/)
+* [jQuery Mobile](http://jquerymobile.com/demos/1.0.1/)
+* [Twitter API console](https://dev.twitter.com/console)
+* [jQuery - getJSON] (http://api.jquery.com/jQuery.getJSON/)
 
 ## Utgangspunkt/utdelt kode
 
