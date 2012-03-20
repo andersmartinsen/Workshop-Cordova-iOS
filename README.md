@@ -6,15 +6,15 @@
 2.  Last ned og installere siste versjon av [PhoneGap](http://phonegap.com/download) og dets innhold. Naviger til iOS-mappa og kjør installer.
 3.  Start opp Xcode og velg "Connect to a repository"
 
-    2.1 Lim inn git@github.com:andersmartinsen/Workshop-Cordova-iOS.git som location
+    3.1 Lim inn git@github.com:andersmartinsen/Workshop-Cordova-iOS.git som location
     
-    2.2 Trykk next
+    3.2 Trykk next
     
-    2.3 Velg for eksempel Cordova som Name og trykk Clone
+    3.3 Velg for eksempel Cordova som Name og trykk Clone
     
-    2.4 Tilbake i hovedvinduet velg Open Other nede i venstre hjørnet
+    3.4 Tilbake i hovedvinduet velg Open Other nede i venstre hjørnet
     
-    2.5 Naviger deg fram mappen hvor du valgte å clone prosjektet og let etter filen som heter "workshop.cordova.xcodeproj" som er prosjektfilen. Velg denne, prosjektet med kode lastes inn, og du er så klar til å sette i gang med oppgavene.
+    3.5 Naviger deg fram mappen hvor du valgte å clone prosjektet og let etter filen som heter "workshop.cordova.xcodeproj" som er prosjektfilen. Velg denne, prosjektet med kode lastes inn, og du er så klar til å sette i gang med oppgavene.
 4.  Trykk Cmd + R for å kjøre i gang simulatoren for å se hva som finnes allerede i applikasjonen
 
 ## Lenker
