@@ -116,17 +116,24 @@
 			
 			var searchUrl = 'http://api.twitter.com/1/users/show.json?callback=?&screen_name=' + username;
 
-		      // Søk etter bruker vha. $.ajax()
+			// Cache-objekt som tar vare på tidligere søkt på brukernavn
+			var screenNameCache = window.screenNameCache || {};
+			var userFromCache = screenNameCache[username];
+			if (userFromCache){
+				// Hvis vi allerede har hentet denne brukeren og lagt i cache, bruk denne istedenfor å kalle på twitter
+			} else {
+				// Søk etter bruker vha. $.ajax()
+			}
 
-		      // Bytt til brukerinfosiden når søkeresultatet kommer
-		      $.mobile.changePage(self.usernameResultPage);
-		      self.renderUser(data); 
-		  	},
-			lagreAnsattTilKontaktLista: function(user) {
-				// Oppgave 3, andre del
-				// Denne delen består av implementere metoden searchByTwitterName() som ligg
-		    	// Bruk kontakt-API'et til PhoneGap å lagre informasjonen i "user"-objektet til kontaktlista, f.eks bilde og navn
-		    },
+	        // Bytt til brukerinfosiden når søkeresultatet kommer
+	        $.mobile.changePage(self.usernameResultPage);
+	        self.renderUser(data); 
+		},
+		lagreAnsattTilKontaktLista: function(user) {
+			// Oppgave 3, andre del
+			// Denne delen består av implementere metoden searchByTwitterName() som ligg
+	    	// Bruk kontakt-API'et til PhoneGap å lagre informasjonen i "user"-objektet til kontaktlista, f.eks bilde og navn
+	    },
     search: function(keyword) {
 		/*
 		Oppgave 1
