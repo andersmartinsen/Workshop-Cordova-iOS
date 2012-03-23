@@ -110,8 +110,8 @@
 			checkConnection();
 			
 			var searchUrl = 'http://api.twitter.com/1/users/show.json?callback=?&screen_name=' + username;
-
-		    // Cache-objekt som tar vare på tidligere søkt på brukernavn
+			
+			// Cache-objekt som tar vare på tidligere søkt på brukernavn
 			var screenNameCache = window.screenNameCache || {};
 			var userFromCache = screenNameCache[username];
 			if (userFromCache){
@@ -120,10 +120,30 @@
 				// Søk etter bruker vha. $.ajax()
 			}
 
+
 			function checkConnection() {
 				// Bruk PhoneGap til å sjekke om du har tilgang til nettverk
 				// Hvis nei, hvis feilmelding, ellers vis tweets by geolocation med metoden findGeoLocationWithPhoneGap()
 			}
+
+	        // Bytt til brukerinfosiden når søkeresultatet kommer
+	        $.mobile.changePage(self.usernameResultPage);
+	        self.renderUser(data); 
+		},
+		lagreAnsattTilKontaktLista: function(user) {
+			// Oppgave 3, andre del
+			// Denne delen består av implementere metoden searchByTwitterName() som ligg
+	    	// Bruk kontakt-API'et til PhoneGap å lagre informasjonen i "user"-objektet til kontaktlista, f.eks bilde og navn
+	    },
+    search: function(keyword) {
+		/*
+		Oppgave 1
+		Søk etter keywords på twitter og vis dem i en liste med tweets. Søkefeltet og søkeknappen er allerede knyttet opp til riktige metoder i App-objektet. 
+		Du må altså hente ut søkeordet fra søkefeltet og bruke $.ajax() til å hente svar i JSON-format. Dette sender du så til renderTweets(tweets) og bytter til 
+		resultatsiden (som også er ett attributt på App).
+		*/
+     	var searchUrl = 'http://search.twitter.com/search.json?callback=?&q=' + keyword;
+>>>>>>> e01b38222de1e52f7cbec08002be22a4397aba40
 
 			function alertDismissed() {
 				console.log("Alert dismissed");
